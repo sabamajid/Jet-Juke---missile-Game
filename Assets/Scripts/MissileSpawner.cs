@@ -11,13 +11,11 @@ public class MissileSpawner : MonoBehaviour
     public float missileLifetime = 10.0f; // How long each missile stays before being destroyed
     private List<GameObject> activeMissiles = new List<GameObject>(); // List to track active missiles
 
-    private float screenWidth;
-    private float screenHeight;
+    private Camera mainCamera;
 
     void Start()
     {
-        screenHeight = Camera.main.orthographicSize * 2;  // Calculate screen height
-        screenWidth = Camera.main.aspect * Camera.main.orthographicSize * 2;  // Calculate screen width
+        mainCamera = Camera.main;  // Reference to the main camera
         StartCoroutine(SpawnMissiles());  // Start spawning missiles
     }
 
@@ -28,6 +26,13 @@ public class MissileSpawner : MonoBehaviour
             // Only spawn a missile if there are less than 3 active missiles
             if (activeMissiles.Count < 3)
             {
+                // Dynamically calculate screen boundaries
+                float screenHeight = mainCamera.orthographicSize * 2;
+                float screenWidth = mainCamera.aspect * mainCamera.orthographicSize * 2;
+
+                // Get the center of the camera
+                Vector3 cameraCenter = mainCamera.transform.position;
+
                 // Randomly choose from where to spawn the missile (left, right, or bottom)
                 int side = Random.Range(0, 3); // 0 = left, 1 = right, 2 = bottom
                 Vector3 spawnPosition = Vector3.zero;
@@ -35,13 +40,13 @@ public class MissileSpawner : MonoBehaviour
                 switch (side)
                 {
                     case 0:  // Spawn from left side
-                        spawnPosition = new Vector3(-screenWidth / 2 - 1, Random.Range(-screenHeight / 2, screenHeight / 2), 0);  // Left edge
+                        spawnPosition = new Vector3(cameraCenter.x - screenWidth / 2 - 1, Random.Range(cameraCenter.y - screenHeight / 2, cameraCenter.y + screenHeight / 2), 0);
                         break;
                     case 1:  // Spawn from right side
-                        spawnPosition = new Vector3(screenWidth / 2 + 1, Random.Range(-screenHeight / 2, screenHeight / 2), 0);  // Right edge
+                        spawnPosition = new Vector3(cameraCenter.x + screenWidth / 2 + 1, Random.Range(cameraCenter.y - screenHeight / 2, cameraCenter.y + screenHeight / 2), 0);
                         break;
                     case 2:  // Spawn from bottom side
-                        spawnPosition = new Vector3(Random.Range(-screenWidth / 2, screenWidth / 2), -screenHeight / 2 - 1, 0);  // Bottom edge
+                        spawnPosition = new Vector3(Random.Range(cameraCenter.x - screenWidth / 2, cameraCenter.x + screenWidth / 2), cameraCenter.y - screenHeight / 2 - 1, 0);
                         break;
                 }
 

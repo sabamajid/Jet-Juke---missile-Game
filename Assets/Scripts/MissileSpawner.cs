@@ -8,7 +8,8 @@ public class MissileSpawner : MonoBehaviour
     public Transform planeTransform;  // Reference to the plane's transform
     public float missileSpeed = 5.0f;  // Speed at which the missile travels
     public float missileSpawnRate = 2.0f;  // Time between missile spawns
-    public float missileLifetime = 10.0f; // How long each missile stays before being destroyed
+    public float missileLifetime = 15.0f; 
+    public float missileChasingtime = 10f;
     private List<GameObject> activeMissiles = new List<GameObject>(); // List to track active missiles
 
     private Camera mainCamera;
@@ -59,7 +60,7 @@ public class MissileSpawner : MonoBehaviour
                 // Start a coroutine to make the missile follow the plane
                 StartCoroutine(MissileFollowPlane(missile));
 
-                // Destroy the missile after a set lifetime and remove it from the active list
+                // Destroy the missile after the set lifetime (15 seconds)
                 Destroy(missile, missileLifetime);
 
                 // Wait for the next missile spawn
@@ -76,23 +77,51 @@ public class MissileSpawner : MonoBehaviour
 
     private IEnumerator MissileFollowPlane(GameObject missile)
     {
-        while (missile != null)
+        float followTime = missileChasingtime; 
+        float lifetime = missileLifetime; 
+
+        // Track time remaining for the missile's lifetime
+        float timeLeft = lifetime;
+
+        while (missile != null && timeLeft > 0)
         {
-            // Get the direction to the plane
-            Vector3 direction = (planeTransform.position - missile.transform.position).normalized;
+            if (followTime > 0)
+            {
+                // Get the direction to the plane (chase the player)
+                Vector3 direction = (planeTransform.position - missile.transform.position).normalized;
 
-            // Move the missile toward the plane
-            missile.GetComponent<Rigidbody2D>().velocity = direction * missileSpeed;
+                // Move the missile toward the plane
+                missile.GetComponent<Rigidbody2D>().velocity = direction * missileSpeed;
 
-            // Rotate missile to face the plane
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            missile.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 180));  // Add 180 degrees to flip the sprite
+                // Rotate missile to face the plane
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                missile.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 180));  // Add 180 degrees to flip the sprite
+            }
+            else
+            {
+                // After 10 seconds, move away from the plane
+                Vector3 awayDirection = (missile.transform.position - planeTransform.position).normalized;
+
+                // Move the missile away from the plane
+                missile.GetComponent<Rigidbody2D>().velocity = awayDirection * missileSpeed;
+
+                // Rotate missile to face away from the plane
+                float angle = Mathf.Atan2(awayDirection.y, awayDirection.x) * Mathf.Rad2Deg;
+                missile.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 180));  // Add 180 degrees to flip the sprite
+            }
+
+            // Decrease the time left to follow or move away
+            timeLeft -= Time.deltaTime;
+            if (followTime > 0)
+            {
+                followTime -= Time.deltaTime; // Decrease follow time
+            }
 
             // Wait for the next frame before updating again
             yield return null;
         }
 
-        // Remove the missile from the active list when it gets destroyed
+        // Remove the missile from the active list when it's no longer following the plane or moving away
         activeMissiles.Remove(missile);
     }
 }

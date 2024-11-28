@@ -15,6 +15,6 @@ EditorBuildSettings:
     path: Assets/Native Share/Scenes/NativeShare.unity
     guid: 237c5816324424f73af675e5bbe1b705
   - enabled: 1
-    path: Assets/2dPlayer movement/2dplayer.unity
+    path: Assets/Scene/2dplayer.unity
     guid: 78dde659ca5f54667a10917a4b6aee87
   m_configObjects: {}

@@ -8,8 +8,9 @@ public class MissileSpawner : MonoBehaviour
     public Transform planeTransform;  // Reference to the plane's transform
     public float missileSpeed = 5.0f;  // Speed at which the missile travels
     public float missileSpawnRate = 2.0f;  // Time between missile spawns
-    public float missileLifetime = 15.0f; 
+    public float missileLifetime = 15.0f;
     public float missileChasingtime = 10f;
+    public float startDelay = 3.0f;  // Delay before spawning the first missile
     private List<GameObject> activeMissiles = new List<GameObject>(); // List to track active missiles
 
     private Camera mainCamera;
@@ -22,6 +23,9 @@ public class MissileSpawner : MonoBehaviour
 
     private IEnumerator SpawnMissiles()
     {
+        // Wait for the initial delay before starting to spawn missiles
+        yield return new WaitForSeconds(startDelay);
+
         while (true)
         {
             // Only spawn a missile if there are less than 3 active missiles
@@ -77,8 +81,8 @@ public class MissileSpawner : MonoBehaviour
 
     private IEnumerator MissileFollowPlane(GameObject missile)
     {
-        float followTime = missileChasingtime; 
-        float lifetime = missileLifetime; 
+        float followTime = missileChasingtime;
+        float lifetime = missileLifetime;
 
         // Track time remaining for the missile's lifetime
         float timeLeft = lifetime;

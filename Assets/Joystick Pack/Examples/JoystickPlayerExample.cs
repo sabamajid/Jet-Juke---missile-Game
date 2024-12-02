@@ -4,6 +4,7 @@ public class AirplaneJoystickControl : MonoBehaviour
 {
     public float speed = 5f;                // Movement speed
     public float rotationSpeed = 5f;       // Rotation speed
+    public float tiltAmount = 30f;         // Maximum tilt angle for pseudo-3D effect
     public VariableJoystick variableJoystick; // Reference to the joystick
     public SpriteRenderer spriteRenderer;  // Reference to the SpriteRenderer
 
@@ -35,17 +36,28 @@ public class AirplaneJoystickControl : MonoBehaviour
         // Move the airplane
         transform.Translate(movement * speed * Time.deltaTime, Space.World);
 
-        // Rotate the airplane to face the direction of movement
+        // Rotate the airplane to face the direction of movement and apply tilt
         if (movement.sqrMagnitude > 0.01f) // Check if there's significant movement
         {
-            // Calculate the angle in degrees based on the movement direction
-            float angle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
-
-            // Create a target rotation
-            Quaternion targetRotation = Quaternion.Euler(0, 0, angle - 90); // Subtract 90 to match airplane orientation
-
-            // Smoothly rotate the airplane towards the target rotation
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            RotateAirplane(movement, horizontal);
         }
+    }
+
+    private void RotateAirplane(Vector2 movement, float horizontalInput)
+    {
+        // Calculate the angle in degrees based on the movement direction
+        float angle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
+
+        // Create a target rotation for z-axis (2D facing direction)
+        Quaternion targetRotationZ = Quaternion.Euler(0, 0, angle - 90); // Subtract 90 to match airplane orientation
+
+        // Calculate the tilt for y-axis based on horizontal input
+        float tiltY = -horizontalInput * tiltAmount;
+
+        // Combine z-axis rotation and y-axis tilt
+        Quaternion targetRotation = Quaternion.Euler(tiltY, 0, angle - 90);
+
+        // Smoothly rotate the airplane towards the target rotation
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 }

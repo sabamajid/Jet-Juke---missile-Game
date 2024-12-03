@@ -87,23 +87,40 @@ public class MissileSpawner : MonoBehaviour
         // Track time remaining for the missile's lifetime
         float timeLeft = lifetime;
 
+        // Speed multiplier to make the missile move faster than the plane
+        float missileSpeedMultiplier = 1.5f; // Adjust this multiplier to make the missile slightly faster
+
+        // Additional offset to make the missile follow in a wider arc
+        float followRadius = 2.0f; // Adjust this value to increase/decrease the arc radius
+
+        // We need to keep track of the last position of the plane to create the arc effect
+        Vector3 lastPlanePosition = planeTransform.position;
+
         while (missile != null && timeLeft > 0)
         {
             if (followTime > 0)
             {
-                // Get the direction to the plane (chase the player)
-                Vector3 direction = (planeTransform.position - missile.transform.position).normalized;
+                // Calculate the direction to the plane
+                Vector3 directionToPlane = planeTransform.position - missile.transform.position;
+                float distanceToPlane = directionToPlane.magnitude;
 
-                // Move the missile toward the plane
-                missile.GetComponent<Rigidbody2D>().velocity = direction * missileSpeed;
+                // Calculate a target position based on an offset from the plane's current position
+                Vector3 offsetDirection = Vector3.Cross(directionToPlane, Vector3.forward).normalized; // Perpendicular direction
+                Vector3 targetPosition = planeTransform.position + offsetDirection * followRadius;
 
-                // Rotate missile to face the plane
+                // Move the missile towards this "target position" (wider arc)
+                Vector3 direction = (targetPosition - missile.transform.position).normalized;
+
+                // Move the missile
+                missile.GetComponent<Rigidbody2D>().velocity = direction * missileSpeed * missileSpeedMultiplier;
+
+                // Rotate missile to face the "target position"
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
                 missile.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle + 180));  // Add 180 degrees to flip the sprite
             }
             else
             {
-                // After 10 seconds, move away from the plane
+                // After follow time ends, move away from the plane (optional logic for after chasing)
                 Vector3 awayDirection = (missile.transform.position - planeTransform.position).normalized;
 
                 // Move the missile away from the plane

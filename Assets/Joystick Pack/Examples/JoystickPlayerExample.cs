@@ -3,13 +3,15 @@
 public class AirplaneJoystickControl : MonoBehaviour
 {
     public float speed = 5f;                // Movement speed
-    public float rotationSpeed = 5f;       // Rotation speed
-    public float tiltAmount = 30f;         // Maximum tilt angle for pseudo-3D effect
+    public float rotationSpeed = 5f;        // Rotation speed
+    public float tiltAmount = 30f;          // Maximum tilt angle for pseudo-3D effect
+    public float bankAmount = 10f;          // Amount of banking (tilt) during turns
     public VariableJoystick variableJoystick; // Reference to the joystick
     public SpriteRenderer spriteRenderer;  // Reference to the SpriteRenderer
 
     private Vector2 lastDirection;         // Last movement direction
     private bool isJoystickUsed = false;   // Flag to check if joystick was used
+    private float currentRotationZ = 0f;   // Current z-rotation angle
 
     private void Start()
     {
@@ -36,28 +38,26 @@ public class AirplaneJoystickControl : MonoBehaviour
         // Move the airplane
         transform.Translate(movement * speed * Time.deltaTime, Space.World);
 
-        // Rotate the airplane to face the direction of movement and apply tilt
+        // Rotate the airplane to face the direction of movement and apply smooth tilt
         if (movement.sqrMagnitude > 0.01f) // Check if there's significant movement
         {
-            RotateAirplane(movement, horizontal);
+            SmoothRotateAirplane(movement, horizontal);
         }
     }
 
-    private void RotateAirplane(Vector2 movement, float horizontalInput)
+    private void SmoothRotateAirplane(Vector2 movement, float horizontalInput)
     {
-        // Calculate the angle in degrees based on the movement direction
-        float angle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
+        // Calculate the target angle in degrees based on the movement direction
+        float targetAngle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
 
-        // Create a target rotation for z-axis (2D facing direction)
-        Quaternion targetRotationZ = Quaternion.Euler(0, 0, angle - 90); // Subtract 90 to match airplane orientation
+        // Smoothly rotate towards the target angle using Mathf.LerpAngle
+        currentRotationZ = Mathf.LerpAngle(currentRotationZ, targetAngle - 90, rotationSpeed * Time.deltaTime);
 
-        // Calculate the tilt for y-axis based on horizontal input
-        float tiltY = -horizontalInput * tiltAmount;
+        // Apply the rotation to the plane
+        transform.rotation = Quaternion.Euler(0, 0, currentRotationZ);
 
-        // Combine z-axis rotation and y-axis tilt
-        Quaternion targetRotation = Quaternion.Euler(tiltY, 0, angle - 90);
-
-        // Smoothly rotate the airplane towards the target rotation
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        // Calculate tilt for bank effect (smooth leaning during turns)
+        float bankTilt = -horizontalInput * bankAmount;
+        transform.rotation = Quaternion.Euler(bankTilt, 0, currentRotationZ);
     }
 }

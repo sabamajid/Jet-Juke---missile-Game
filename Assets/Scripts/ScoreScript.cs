@@ -63,12 +63,12 @@ public class ScoreScript : MonoBehaviour
     {
         if (currentScoreText != null)
         {
-            currentScoreText.text = "Current Score: " + Mathf.FloorToInt(currentScore).ToString();
+            currentScoreText.text = " " + Mathf.FloorToInt(currentScore).ToString();
         }
 
         if (highestScoreText != null)
         {
-            highestScoreText.text = "Highest Score: " + Mathf.FloorToInt(highestScore).ToString();
+            highestScoreText.text = " " + Mathf.FloorToInt(highestScore).ToString();
         }
     }
 }

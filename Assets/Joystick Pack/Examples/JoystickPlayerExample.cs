@@ -3,21 +3,14 @@
 public class AirplaneJoystickControl : MonoBehaviour
 {
     public float speed = 5f;                // Movement speed
-    public float rotationSpeed = 5f;        // Rotation speed
+    public float rotationSpeed = 2f;        // Speed at which the plane rotates
     public float tiltAmount = 30f;          // Maximum tilt angle for pseudo-3D effect
     public float bankAmount = 10f;          // Amount of banking (tilt) during turns
     public VariableJoystick variableJoystick; // Reference to the joystick
     public SpriteRenderer spriteRenderer;  // Reference to the SpriteRenderer
 
-    private Vector2 lastDirection;         // Last movement direction
-    private bool isJoystickUsed = false;   // Flag to check if joystick was used
-    private float currentRotationZ = 0f;   // Current z-rotation angle
-
-    private void Start()
-    {
-        // Start moving upwards
-        lastDirection = Vector2.up;
-    }
+    private Vector2 lastDirection = Vector2.up;  // Default initial direction
+    private float currentRotationZ = 0f;         // Current z-rotation angle
 
     private void Update()
     {
@@ -25,39 +18,35 @@ public class AirplaneJoystickControl : MonoBehaviour
         float horizontal = variableJoystick.Horizontal;
         float vertical = variableJoystick.Vertical;
 
-        // Check if joystick is being used
-        if (Mathf.Abs(horizontal) > 0.01f || Mathf.Abs(vertical) > 0.01f)
+        // Calculate the new direction based on joystick input
+        Vector2 inputDirection = new Vector2(horizontal, vertical).normalized;
+
+        // Check if joystick input is significant
+        if (inputDirection.sqrMagnitude > 0.01f)
         {
-            isJoystickUsed = true;
-            lastDirection = new Vector2(horizontal, vertical).normalized;
+            lastDirection = inputDirection; // Update last direction based on input
         }
 
-        // Determine the current movement direction
-        Vector2 movement = isJoystickUsed ? lastDirection : Vector2.up;
+        // Move the airplane forward in the current direction
+        transform.Translate(lastDirection * speed * Time.deltaTime, Space.World);
 
-        // Move the airplane
-        transform.Translate(movement * speed * Time.deltaTime, Space.World);
-
-        // Rotate the airplane to face the direction of movement and apply smooth tilt
-        if (movement.sqrMagnitude > 0.01f) // Check if there's significant movement
-        {
-            SmoothRotateAirplane(movement, horizontal);
-        }
+        // Rotate the airplane to face the direction of movement smoothly
+        SmoothRotateAirplane(lastDirection);
     }
 
-    private void SmoothRotateAirplane(Vector2 movement, float horizontalInput)
+    private void SmoothRotateAirplane(Vector2 direction)
     {
-        // Calculate the target angle in degrees based on the movement direction
-        float targetAngle = Mathf.Atan2(movement.y, movement.x) * Mathf.Rad2Deg;
+        // Calculate the target angle based on the movement direction
+        float targetAngle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90f; // Offset to align sprite orientation
 
-        // Smoothly rotate towards the target angle using Mathf.LerpAngle
-        currentRotationZ = Mathf.LerpAngle(currentRotationZ, targetAngle - 90, rotationSpeed * Time.deltaTime);
+        // Gradually rotate towards the target angle
+        currentRotationZ = Mathf.MoveTowardsAngle(currentRotationZ, targetAngle, rotationSpeed * Time.deltaTime * 100f);
 
-        // Apply the rotation to the plane
+        // Apply rotation to the airplane
         transform.rotation = Quaternion.Euler(0, 0, currentRotationZ);
 
-        // Calculate tilt for bank effect (smooth leaning during turns)
-        float bankTilt = -horizontalInput * bankAmount;
+        // Simulate banking effect by tilting on the y-axis based on turn intensity
+        float bankTilt = Mathf.Clamp(-(targetAngle - currentRotationZ) * 0.5f, -bankAmount, bankAmount);
         transform.rotation = Quaternion.Euler(bankTilt, 0, currentRotationZ);
     }
 }

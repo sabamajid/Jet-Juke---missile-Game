@@ -215,10 +215,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f953a633608a49889ed12cc993b41d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTimerRunning: 1
   timeElapsed: 0
   timerText: {fileID: 73882142}
-  isTimerRunning: 1
-  scoreScript: {fileID: 1499189478}
 --- !u!1 &74434669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1054,7 +1053,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missilePrefab: {fileID: 2337649457788942734, guid: b8bd642e4e76244d8900650a7f840ad7, type: 3}
   planeTransform: {fileID: 777078091}
-  missileSpeed: 3.2
+  missileSpeed: 2.5
   missileSpawnRate: 2
   missileLifetime: 25
   missileChasingtime: 17
@@ -1918,6 +1917,7 @@ GameObject:
   - component: {fileID: 777078088}
   - component: {fileID: 777078093}
   - component: {fileID: 777078092}
+  - component: {fileID: 777078094}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1937,9 +1937,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a37d705c8e9115e439ec799186182634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  rotationSpeed: 10
+  speed: 2
+  rotationSpeed: 3
   tiltAmount: 30
+  bankAmount: 0
   variableJoystick: {fileID: 1222401808}
   spriteRenderer: {fileID: 777078090}
 --- !u!50 &777078089
@@ -2053,6 +2054,7 @@ MonoBehaviour:
   Blast: {fileID: 1596569431}
   missiles: {fileID: 411828233}
   GameOverpanel: {fileID: 1499189474}
+  scoreScript: {fileID: 1014249251}
 --- !u!61 &777078093
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2098,6 +2100,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5621959, y: 1.8559456}
   m_EdgeRadius: 0
+--- !u!95 &777078094
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777078087}
+  m_Enabled: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6a4228f7410ad429fb596e358bcbe144, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &784571257
 GameObject:
   m_ObjectHideFlags: 0
@@ -3337,11 +3360,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3881087804030458062, guid: ec536a7718376554185e4a856d5ae230, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 80
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 3881087804030458062, guid: ec536a7718376554185e4a856d5ae230, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 80
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 3881087804030458062, guid: ec536a7718376554185e4a856d5ae230, type: 3}
       propertyPath: m_LocalScale.x
@@ -3354,6 +3377,14 @@ PrefabInstance:
     - target: {fileID: 3881087804030458062, guid: ec536a7718376554185e4a856d5ae230, type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881087804030458062, guid: ec536a7718376554185e4a856d5ae230, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3881087804030458062, guid: ec536a7718376554185e4a856d5ae230, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

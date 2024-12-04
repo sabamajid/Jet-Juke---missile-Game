@@ -6,6 +6,7 @@ public class PlaneCollision : MonoBehaviour
     public GameObject missiles;
     public GameObject GameOverpanel;
     public ScoreScript scoreScript; // Reference to ScoreScript
+    public GameObject Joystick;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -35,9 +36,13 @@ public class PlaneCollision : MonoBehaviour
 
             // Deactivate the missiles
             missiles.SetActive(false);
+            Joystick.SetActive(false);
 
             // Show Game Over panel
             GameOverpanel.SetActive(true);
+
+            gameObject.SetActive(false);
+           
         }
     }
 }

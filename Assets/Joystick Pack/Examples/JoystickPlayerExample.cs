@@ -2,6 +2,8 @@
 
 public class AirplaneJoystickControl : MonoBehaviour
 {
+    public static AirplaneJoystickControl instance;
+
     public float speed = 5f;                // Movement speed
     public float rotationSpeed = 2f;        // Speed at which the plane rotates
     public float tiltAmount = 30f;          // Maximum tilt angle for pseudo-3D effect
@@ -11,6 +13,24 @@ public class AirplaneJoystickControl : MonoBehaviour
 
     private Vector2 lastDirection = Vector2.up;  // Default initial direction
     private float currentRotationZ = 0f;         // Current z-rotation angle
+
+
+    void Awake()
+    {
+        MakeInstance();
+    }
+
+    void MakeInstance()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Update()
     {

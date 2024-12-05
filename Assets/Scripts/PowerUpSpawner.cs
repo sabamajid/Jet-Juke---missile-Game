@@ -37,7 +37,7 @@ public class PowerUpSpawner : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
 
         // Spawn the first star after a delay
-        InvokeRepeating("SpawnStar", 2f, 5f);  // Spawn a new star every 5 seconds
+        InvokeRepeating("SpawnStar", 1f, 3f);  // Spawn a new star every 5 seconds
     }
 
     void Update()

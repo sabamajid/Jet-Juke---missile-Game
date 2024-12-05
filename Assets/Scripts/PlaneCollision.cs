@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlaneCollision : MonoBehaviour
@@ -12,6 +13,7 @@ public class PlaneCollision : MonoBehaviour
     {
         if (other.CompareTag("Missile"))
         {
+            Destroy(other.gameObject);
             Debug.Log("Missile hit the plane!");
 
             // Activate explosion effect
@@ -42,6 +44,7 @@ public class PlaneCollision : MonoBehaviour
             GameOverpanel.SetActive(true);
 
             gameObject.SetActive(false);
+
            
         }
     }

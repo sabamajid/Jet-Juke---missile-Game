@@ -1053,7 +1053,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missilePrefab: {fileID: 2337649457788942734, guid: b8bd642e4e76244d8900650a7f840ad7, type: 3}
   planeTransform: {fileID: 777078091}
-  missileSpeed: 2.3
+  missileSpeed: 2.25
   missileSpawnRate: 2
   activeMissiles: []
 --- !u!4 &411828235
@@ -5378,7 +5378,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1499189475
 RectTransform:
   m_ObjectHideFlags: 0

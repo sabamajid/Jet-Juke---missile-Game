@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ShieldSpawner : MonoBehaviour
@@ -7,8 +8,10 @@ public class ShieldSpawner : MonoBehaviour
     public float spawnRadius = 10f;  // The radius around the player where the shield can spawn
     public float minSpawnTime = 3f; // Minimum time before the next spawn
     public float maxSpawnTime = 5f; // Maximum time before the next spawn
+    public int shieldsToSpawnAtOnce = 1;  // Number of shields to spawn at a time
 
     private GameObject player;
+    private List<GameObject> currentShields = new List<GameObject>();  // List to track currently spawned shields
 
     void Start()
     {
@@ -28,12 +31,24 @@ public class ShieldSpawner : MonoBehaviour
 
             if (player != null)
             {
-                // Get a random position around the player within the spawn radius
-                Vector3 spawnPosition = player.transform.position + Random.insideUnitSphere * spawnRadius;
-                spawnPosition.z = 0f;  // Keep it on the 2D plane
+                // Destroy all existing shields before spawning new ones
+                foreach (GameObject shield in currentShields)
+                {
+                    Destroy(shield);
+                }
+                currentShields.Clear();
 
-                // Instantiate the shield prefab at the spawn position
-                Instantiate(shieldPrefab, spawnPosition, Quaternion.identity);
+                // Spawn the specified number of shields
+                for (int i = 0; i < shieldsToSpawnAtOnce; i++)
+                {
+                    // Get a random position around the player within the spawn radius
+                    Vector3 spawnPosition = player.transform.position + Random.insideUnitSphere * spawnRadius;
+                    spawnPosition.z = 0f;  // Keep it on the 2D plane
+
+                    // Instantiate the shield at the spawn position and add it to the list
+                    GameObject newShield = Instantiate(shieldPrefab, spawnPosition, Quaternion.identity);
+                    currentShields.Add(newShield);
+                }
             }
         }
     }

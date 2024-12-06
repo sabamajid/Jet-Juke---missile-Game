@@ -1055,9 +1055,7 @@ MonoBehaviour:
   planeTransform: {fileID: 777078091}
   missileSpeed: 2.3
   missileSpawnRate: 2
-  missileLifetime: 20
-  fadeDuration: 1
-  startDelay: 3
+  activeMissiles: []
 --- !u!4 &411828235
 Transform:
   m_ObjectHideFlags: 0
@@ -2644,6 +2642,7 @@ MonoBehaviour:
   spawnRadius: 10
   minSpawnTime: 3
   maxSpawnTime: 5
+  coinsToSpawnAtOnce: 3
 --- !u!1 &874702135
 GameObject:
   m_ObjectHideFlags: 0

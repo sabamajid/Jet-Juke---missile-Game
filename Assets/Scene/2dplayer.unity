@@ -1053,7 +1053,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missilePrefab: {fileID: 2337649457788942734, guid: b8bd642e4e76244d8900650a7f840ad7, type: 3}
   planeTransform: {fileID: 777078091}
-  missileSpeed: 2.5
+  missileSpeed: 2.3
   missileSpawnRate: 2
   missileLifetime: 20
   fadeDuration: 1

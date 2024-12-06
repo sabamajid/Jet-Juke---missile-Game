@@ -1,5 +1,6 @@
-using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class PowerUpSpawner : MonoBehaviour
 {
@@ -9,7 +10,10 @@ public class PowerUpSpawner : MonoBehaviour
     public float spawnRadius = 10f;         // Radius around the player to spawn the star
     public float speedBoostDuration = 5f;   // Duration of the speed boost after collecting the star
     public float speedBoostAmount = 3f;     // Amount to increase the player's speed
+    public int powerUpsToSpawnAtOnce = 1;   // Number of power-ups (stars) to spawn at once
+
     private GameObject player;              // Reference to the player
+    private List<GameObject> currentPowerUps = new List<GameObject>();  // List to track currently spawned power-ups
 
     private bool isSpeedBoostActive = false; // Check if speed boost is active
     private float currentSpeedBoostTime = 0f; // Track current speed boost time
@@ -36,8 +40,8 @@ public class PowerUpSpawner : MonoBehaviour
         // Find the player GameObject
         player = GameObject.FindGameObjectWithTag("Player");
 
-        // Spawn the first star after a delay
-        InvokeRepeating("SpawnStar", 1f, 3f);  // Spawn a new star every 5 seconds
+        // Start spawning power-ups at regular intervals
+        InvokeRepeating("SpawnPowerUps", 1f, 3f);  // Spawn a new set of power-ups every 3 seconds
     }
 
     void Update()
@@ -57,14 +61,28 @@ public class PowerUpSpawner : MonoBehaviour
         }
     }
 
-    void SpawnStar()
+    void SpawnPowerUps()
     {
         if (player != null)
         {
-            // Generate a random position within the spawn radius around the player
-            Vector3 spawnPosition = player.transform.position + Random.insideUnitSphere * spawnRadius;
-            spawnPosition.z = 0f;  // Keep the star on the 2D plane
-            Instantiate(starPrefab, spawnPosition, Quaternion.identity);
+            // Destroy all existing power-ups before spawning new ones
+            foreach (GameObject powerUp in currentPowerUps)
+            {
+                Destroy(powerUp);
+            }
+            currentPowerUps.Clear();
+
+            // Spawn the specified number of power-ups
+            for (int i = 0; i < powerUpsToSpawnAtOnce; i++)
+            {
+                // Generate a random position within the spawn radius around the player
+                Vector3 spawnPosition = player.transform.position + Random.insideUnitSphere * spawnRadius;
+                spawnPosition.z = 0f;  // Keep the star on the 2D plane
+
+                // Instantiate the power-up (star) at the spawn position and add it to the list
+                GameObject newPowerUp = Instantiate(starPrefab, spawnPosition, Quaternion.identity);
+                currentPowerUps.Add(newPowerUp);
+            }
         }
     }
 

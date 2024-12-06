@@ -2639,7 +2639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CoinPrefab: {fileID: 5658407990672495752, guid: 5d4cc5c72323848de87aa36438006f82, type: 3}
-  spawnRadius: 10
+  spawnRadius: 20
   minSpawnTime: 3
   maxSpawnTime: 5
   coinsToSpawnAtOnce: 3
@@ -3263,7 +3263,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldPrefab: {fileID: 8473842063055338569, guid: dcd103dc1c12243e9b637074c3dd5f0c, type: 3}
-  spawnRadius: 10
+  spawnRadius: 20
   minSpawnTime: 3
   maxSpawnTime: 5
   shieldsToSpawnAtOnce: 2
@@ -6052,9 +6052,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starPrefab: {fileID: 4166911369544714759, guid: f574014f8c1544fe1b24c963b49d313e, type: 3}
-  spawnRadius: 10
+  spawnRadius: 20
   speedBoostDuration: 3
   speedBoostAmount: 1
+  powerUpsToSpawnAtOnce: 3
 --- !u!1001 &2024272030
 PrefabInstance:
   m_ObjectHideFlags: 0

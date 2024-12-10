@@ -33,6 +33,7 @@ public class ScoreScript : MonoBehaviour
     {
         // Calculate the current score by multiplying the time by 3
         currentScore = timeElapsed * 3;
+        
 
         // If the current score is greater than the highest score, update it
         if (currentScore > highestScore)

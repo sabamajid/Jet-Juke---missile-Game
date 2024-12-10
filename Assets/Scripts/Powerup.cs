@@ -20,6 +20,7 @@ public class Powerup : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+
         // Check if the player collided with the power-up
         if (other.CompareTag("Player"))
         {
@@ -28,6 +29,7 @@ public class Powerup : MonoBehaviour
             {
                 pickupAudio.Play();
             }
+            PowerUpSpawner.instance.CollectPowerUp();
 
             // Start fading out the object and then destroy it after a delay
             StartCoroutine(FadeOutAndDestroy());
@@ -45,5 +47,7 @@ public class Powerup : MonoBehaviour
 
         // After 3 seconds, destroy the object
         Destroy(gameObject);
+        // Activate the speed boost effect
+       
     }
 }

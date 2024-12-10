@@ -28,7 +28,7 @@ public class CoinsUp : MonoBehaviour
             {
                 pickupAudio.Play();
             }
-
+            CoinManager.instance.AddCoins(1);
             // Start fading out the object and then destroy it after a delay
             StartCoroutine(FadeOutAndDestroy());
         }
@@ -45,5 +45,6 @@ public class CoinsUp : MonoBehaviour
 
         // After 3 seconds, destroy the object
         Destroy(gameObject);
+       
     }
 }

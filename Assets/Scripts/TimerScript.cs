@@ -17,7 +17,7 @@ public class TimerScript : MonoBehaviour
         }
         else if (instance != this)
         {
-            Destroy(gameObject); // Ensure only one instance exists
+            Destroy(gameObject); // Ensure only one instancse exists
         }
 
         DontDestroyOnLoad(gameObject); // Optional: if you want this script to persist across scenes

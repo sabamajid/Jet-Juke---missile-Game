@@ -3112,8 +3112,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CoinPrefab: {fileID: 5658407990672495752, guid: 5d4cc5c72323848de87aa36438006f82, type: 3}
   spawnRadius: 20
-  minSpawnTime: 3
-  maxSpawnTime: 5
+  minSpawnTime: 5
+  maxSpawnTime: 20
   coinsToSpawnAtOnce: 3
 --- !u!1 &874702135
 GameObject:

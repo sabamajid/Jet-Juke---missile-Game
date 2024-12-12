@@ -36,17 +36,17 @@ public class PlaneBehaviour : MonoBehaviour
 
     void movePlane()
     {
-        // Get vertical input from the joystick's Y-axis (up/down)
-        float verticalInput = variableJoystick.Vertical;
+        // Invert the vertical joystick input (multiply by -1)
+        float verticalInput = -variableJoystick.Vertical;  // Inverted input for up/down movement
 
-        // You can adjust the speed or direction here
-        rb.velocity = transform.up * (speed + verticalInput * 2f); // Adjust speed based on vertical joystick input
+        // Adjust the speed based on the vertical joystick input
+        rb.velocity = transform.up * (speed + verticalInput * 2f); // Adjust speed based on vertical input
     }
 
     void rotatePlane()
     {
-        // Get horizontal input from the joystick's X-axis (left/right)
-        float horizontalInput = variableJoystick.Horizontal;
+        // Invert the horizontal joystick input (multiply by -1)
+        float horizontalInput = -variableJoystick.Horizontal;  // Inverted input for left/right rotation
 
         // Debugging: Log the horizontal input to check if it's responding
         Debug.Log("Horizontal Input: " + horizontalInput);
@@ -54,7 +54,7 @@ public class PlaneBehaviour : MonoBehaviour
         float angle;
         Vector2 direction = new Vector2(0, 0);
 
-        // Calculate the direction based on joystick input
+        // Calculate the direction based on inverted joystick input
         if (horizontalInput < 0) direction = (Vector2)leftPoint.position - rb.position;
         if (horizontalInput > 0) direction = (Vector2)rightPoint.position - rb.position;
 

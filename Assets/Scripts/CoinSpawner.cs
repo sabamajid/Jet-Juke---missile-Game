@@ -16,7 +16,7 @@ public class CoinSpawner : MonoBehaviour
     void Start()
     {
         // Find the player GameObject
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("plane");
 
         // Start spawning coins at random intervals
         StartCoroutine(SpawnCoins());

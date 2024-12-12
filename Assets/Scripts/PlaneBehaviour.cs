@@ -16,32 +16,49 @@ public class PlaneBehaviour : MonoBehaviour
 
     // Reference to your VariableJoystick (assumed to be attached to a UI joystick object)
     public VariableJoystick variableJoystick;
+    Vector2 lastMovementDirection = Vector2.right; // Default starting direction
 
-    // Use this for initialization
     void Start()
     {
         if (cam == null) cam = Camera.main;
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         if (!isGameOver)
         {
-            movePlane();
-            rotatePlane();
+            MovePlaneDirectly();
         }
     }
 
-    void movePlane()
+ 
+    void MovePlaneDirectly()
     {
-        // Invert the vertical joystick input (multiply by -1)
-        float verticalInput = -variableJoystick.Vertical;  // Inverted input for up/down movement
+        // Get the joystick input
+        float horizontalInput = variableJoystick.Horizontal;
+        float verticalInput = variableJoystick.Vertical;
 
-        // Adjust the speed based on the vertical joystick input
-        rb.velocity = transform.up * (speed + verticalInput * 2f); // Adjust speed based on vertical input
+        // Calculate the current movement direction
+        Vector2 currentMovementDirection = new Vector2(horizontalInput, verticalInput);
+
+        // If there is joystick input, update the last movement direction
+        if (currentMovementDirection != Vector2.zero)
+        {
+            lastMovementDirection = currentMovementDirection.normalized;
+        }
+
+        // Set the velocity based on the last movement direction
+        rb.velocity = lastMovementDirection * speed;
+
+        // Rotate the plane to face the movement direction
+        if (lastMovementDirection != Vector2.zero)
+        {
+            float angle = Mathf.Atan2(lastMovementDirection.y, lastMovementDirection.x) * Mathf.Rad2Deg;
+            rb.rotation = angle; // Rotate the Rigidbody2D to face the movement direction
+        }
     }
+
 
     void rotatePlane()
     {

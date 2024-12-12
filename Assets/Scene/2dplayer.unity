@@ -1032,6 +1032,7 @@ GameObject:
   m_Component:
   - component: {fileID: 411828235}
   - component: {fileID: 411828234}
+  - component: {fileID: 411828236}
   m_Layer: 0
   m_Name: MissileSpawner
   m_TagString: Untagged
@@ -1046,7 +1047,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 411828233}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a050e694e13ad4f9d9aa7667eefd150a, type: 3}
   m_Name: 
@@ -1071,6 +1072,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &411828236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 411828233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7702277bed9b486b8b4801b108a3293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &448146766
 GameObject:
   m_ObjectHideFlags: 0
@@ -2525,6 +2538,7 @@ GameObject:
   - component: {fileID: 777078092}
   - component: {fileID: 777078094}
   - component: {fileID: 777078095}
+  - component: {fileID: 777078096}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2539,17 +2553,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 777078087}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a37d705c8e9115e439ec799186182634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2.2
-  rotationSpeed: 3
-  tiltAmount: 30
-  bankAmount: 0
+  speed: 20
+  steerSpeed: 30
   variableJoystick: {fileID: 1222401808}
-  spriteRenderer: {fileID: 777078090}
 --- !u!50 &777078089
 Rigidbody2D:
   serializedVersion: 4
@@ -2818,6 +2829,20 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &777078096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 777078087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32f7c95bb40bf4d9bb858a1714c3f734, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  joystick: {fileID: 1222401808}
 --- !u!1 &784571257
 GameObject:
   m_ObjectHideFlags: 0

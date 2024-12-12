@@ -14,11 +14,11 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Native Share/Scenes/NativeShare.unity
     guid: 237c5816324424f73af675e5bbe1b705
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scene/MainMenu.unity
     guid: 9c86da7449e7645f89e1f77a6abba662
   - enabled: 1
-    path: Assets/Scene/Main.unity
+    path: Assets/Scene/GamePlay.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 0
     path: Assets/Scene/2dplayer.unity

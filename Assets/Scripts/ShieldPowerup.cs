@@ -3,15 +3,13 @@ using System.Collections;
 
 public class ShieldPowerup : MonoBehaviour
 {
-    [SerializeField] private AudioSource pickupAudio;  // AudioSource for shield power-up sound
-    private Renderer sphereRenderer;  // Renderer of the object to modify opacity
+    [SerializeField] private AudioSource pickupAudio; 
+    private Renderer sphereRenderer;  
 
     void Start()
     {
-        // Get the Renderer component
         sphereRenderer = GetComponent<Renderer>();
 
-        // Ensure the AudioSource is stopped initially
         if (pickupAudio != null)
         {
             pickupAudio.Stop();
@@ -20,24 +18,27 @@ public class ShieldPowerup : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // Check if the player collided with the shield power-up
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("plane"))
         {
+            Debug.Log("hiiiiii");
             // Activate the player's shield
             PlayerShield playerShield = other.GetComponent<PlayerShield>();
+            Debug.Log("i got the shield " + playerShield.name);
             if (playerShield != null)
             {
                 playerShield.EnableShield(5f); // Enable shield for 5 seconds
             }
 
-            // Play the pickup sound if AudioSource is available
             if (pickupAudio != null)
             {
                 pickupAudio.Play();
             }
-
-            // Start fading out the object and then destroy it after a delay
+            
             StartCoroutine(FadeOutAndDestroy());
+        }
+        else
+        {
+            Debug.Log("biii");
         }
     }
 

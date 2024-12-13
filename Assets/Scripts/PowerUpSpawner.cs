@@ -38,7 +38,7 @@ public class PowerUpSpawner : MonoBehaviour
     void Start()
     {
         // Find the player GameObject
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("plane");
 
         // Start spawning power-ups at regular intervals
         InvokeRepeating("SpawnPowerUps", 1f, 3f);  // Spawn a new set of power-ups every 3 seconds

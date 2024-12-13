@@ -21,7 +21,7 @@ public class CoinsUp : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         // Check if the player collided with the coin
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("plane"))
         {
             // Play the pickup sound if AudioSource is available
             if (pickupAudio != null)

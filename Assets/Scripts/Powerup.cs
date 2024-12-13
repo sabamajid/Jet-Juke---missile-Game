@@ -22,7 +22,7 @@ public class Powerup : MonoBehaviour
     {
 
         // Check if the player collided with the power-up
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("plane"))
         {
             // Play the pickup sound if AudioSource is available
             if (pickupAudio != null)

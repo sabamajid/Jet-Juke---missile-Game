@@ -16,7 +16,7 @@ public class ShieldSpawner : MonoBehaviour
     void Start()
     {
         // Find the player GameObject
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("plane");
 
         // Start spawning shields at random intervals
         StartCoroutine(SpawnShield());

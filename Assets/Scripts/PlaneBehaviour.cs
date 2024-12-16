@@ -102,7 +102,7 @@ public class PlaneBehaviour : MonoBehaviour
 
     IEnumerator canvasStuff()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.1f);
         canvas.SetActive(true);
         for (int i = 0; i <= 10; i++)
         {

@@ -62,9 +62,12 @@ public class ScoreScript : MonoBehaviour
     // This method updates the UI to show the current and highest scores
     private void UpdateScoreDisplay()
     {
+
         if (currentScoreText != null)
         {
+            Debug.Log("about to write curret score score updated");
             currentScoreText.text = " " + Mathf.FloorToInt(currentScore).ToString();
+            Debug.Log("current score updated");
         }
 
         if (highestScoreText != null)

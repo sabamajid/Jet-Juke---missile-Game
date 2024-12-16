@@ -7,6 +7,7 @@ public class TimerScript : MonoBehaviour
     public bool isTimerRunning = false;
     public float timeElapsed = 0f;
     public UnityEngine.UI.Text timerText;
+    public float scoreMultiplier = 3f; // Points per second
 
     private void Awake()
     {
@@ -17,7 +18,7 @@ public class TimerScript : MonoBehaviour
         }
         else if (instance != this)
         {
-            Destroy(gameObject); // Ensure only one instancse exists
+            Destroy(gameObject); // Ensure only one instance exists
         }
 
         DontDestroyOnLoad(gameObject); // Optional: if you want this script to persist across scenes
@@ -46,5 +47,13 @@ public class TimerScript : MonoBehaviour
     public void StopTimer()
     {
         isTimerRunning = false;
+        Debug.Log("Timer Stopped. Time Elapsed: " + timeElapsed); // Log the elapsed time
+
+        // Calculate points based on timeElapsed
+        float points = timeElapsed * scoreMultiplier;
+        Debug.Log("Points Awarded: " + points);
+
+        // Pass the final time and points to the ScoreScript
+        ScoreScript.instance.UpdateScores(timeElapsed, points);
     }
 }

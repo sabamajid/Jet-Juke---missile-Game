@@ -29,7 +29,7 @@ public class PlaneCollision : MonoBehaviour
             if (scoreScript != null)
             {
                 TimerScript.instance.StopTimer();  // Access TimerScript's instance to stop the timer
-                scoreScript.ShowScores(TimerScript.instance.timeElapsed); // Pass timeElapsed from TimerScript to ScoreScript
+               // scoreScript.ShowScores(TimerScript.instance.timeElapsed); // Pass timeElapsed from TimerScript to ScoreScript
             }
             else
             {

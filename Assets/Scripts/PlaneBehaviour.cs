@@ -13,6 +13,7 @@ public class PlaneBehaviour : MonoBehaviour
     public float speed = 5f, rotateSpeed = 50f;
     Vector3 mousePosition;
     bool isGameOver;
+   
 
     // Reference to your VariableJoystick (assumed to be attached to a UI joystick object)
     public VariableJoystick variableJoystick;
@@ -87,6 +88,7 @@ public class PlaneBehaviour : MonoBehaviour
 
     public void gameOver(Transform missile)
     {
+      
         GetComponentInChildren<SpriteRenderer>().enabled = false;
         isGameOver = true;
         rb.velocity = new Vector2(0, 0);
@@ -102,6 +104,17 @@ public class PlaneBehaviour : MonoBehaviour
 
     IEnumerator canvasStuff()
     {
+        TimerScript.instance.StopTimer();
+
+        // Show the Game Over panel
+        if (canvas != null)
+        {
+            canvas.SetActive(true);
+
+            // Notify the ScoreScript that the panel is now active
+            ScoreScript.instance.OnGameOverPanelActivated();
+        }
+
         yield return new WaitForSeconds(0.1f);
         canvas.SetActive(true);
         for (int i = 0; i <= 10; i++)
@@ -110,6 +123,9 @@ public class PlaneBehaviour : MonoBehaviour
             canvas.transform.localScale = new Vector3(k, k, k);
             yield return new WaitForSeconds(0.01f);
         }
+
+       
+
         Destroy(gameObject);
     }
 }

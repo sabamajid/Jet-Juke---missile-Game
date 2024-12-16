@@ -3206,6 +3206,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentScoreText: {fileID: 1295492989}
   highestScoreText: {fileID: 1386025570}
+  lastTimeText: {fileID: 1076645690}
+  gameOverPanel: {fileID: 1513067010}
 --- !u!1 &985518272
 GameObject:
   m_ObjectHideFlags: 0
@@ -4872,6 +4874,7 @@ MonoBehaviour:
   isTimerRunning: 1
   timeElapsed: 0
   timerText: {fileID: 1503580230}
+  scoreMultiplier: 3
 --- !u!114 &1503580230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5073,6 +5076,10 @@ PrefabInstance:
       propertyPath: canvas
       value: 
       objectReference: {fileID: 1513067010}
+    - target: {fileID: 114428669407215556, guid: 9648d4dd94d885343b41abc698f5615d, type: 3}
+      propertyPath: TimerScript
+      value: 
+      objectReference: {fileID: 1503580229}
     - target: {fileID: 114428669407215556, guid: 9648d4dd94d885343b41abc698f5615d, type: 3}
       propertyPath: variableJoystick
       value: 

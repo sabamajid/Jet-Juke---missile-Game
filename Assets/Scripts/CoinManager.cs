@@ -5,8 +5,8 @@ public class CoinManager : MonoBehaviour
 {
     public static CoinManager instance;
 
-    private int coinCount = 0;  // Current coin count
-    private int totalCoins = 0; // Total coins (persistent)
+    public int coinCount = 0;  // Current coin count
+    public int totalCoins = 0; // Total coins (persistent)
 
     // Arrays of UI Text elements to display the coin counts
     public Text[] temporaryCoinTexts;  // Temporary coin texts (e.g., current session)
@@ -20,7 +20,7 @@ public class CoinManager : MonoBehaviour
     }
 
     void MakeInstance()
-    {
+    { 
         if (instance == null)
         {
             instance = this;

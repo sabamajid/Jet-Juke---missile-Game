@@ -1721,6 +1721,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6afc800a19a564e5ea3070158d24c273, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coinCount: 0
+  totalCoins: 0
   temporaryCoinTexts:
   - {fileID: 1231562469}
   - {fileID: 272400640}
@@ -3288,6 +3290,7 @@ MonoBehaviour:
   highestScoreText: {fileID: 1386025570}
   lastTimeText: {fileID: 1076645690}
   gameOverPanel: {fileID: 1513067010}
+  CoinWithBonus: {fileID: 669822904}
 --- !u!1 &985518272
 GameObject:
   m_ObjectHideFlags: 0
@@ -5095,7 +5098,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1513067011
 MonoBehaviour:
   m_ObjectHideFlags: 0

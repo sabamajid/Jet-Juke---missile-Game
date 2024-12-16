@@ -9,6 +9,7 @@ public class ScoreScript : MonoBehaviour
     public Text highestScoreText; // UI Text for highest score
     public Text lastTimeText; // UI Text for last time
     public GameObject gameOverPanel; // Reference to the Game Over panel
+    public Text CoinWithBonus;
 
     private float currentScore = 0f; // Current calculated score
     private float highestScore = 0f; // Highest score stored in PlayerPrefs

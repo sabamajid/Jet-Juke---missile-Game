@@ -2573,10 +2573,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldPrefab: {fileID: 8473842063055338569, guid: dcd103dc1c12243e9b637074c3dd5f0c, type: 3}
-  spawnRadius: 20
-  minSpawnTime: 3
-  maxSpawnTime: 5
-  shieldsToSpawnAtOnce: 2
+  outsideSpawnRadius: 15
+  destroyDistance: 50
+  shieldsToSpawnAtOnce: 1
+  checkInterval: 1
 --- !u!1 &827635946
 GameObject:
   m_ObjectHideFlags: 0

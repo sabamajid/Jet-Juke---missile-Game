@@ -2018,10 +2018,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CoinPrefab: {fileID: 5658407990672495752, guid: 5d4cc5c72323848de87aa36438006f82, type: 3}
-  spawnRadius: 20
-  minSpawnTime: 1
-  maxSpawnTime: 5
-  coinsToSpawnAtOnce: 3
+  outsideSpawnRadius: 10
+  destroyDistance: 50
+  coinsToSpawnAtOnce: 1
+  checkInterval: 1
 --- !u!1 &538881841
 GameObject:
   m_ObjectHideFlags: 0

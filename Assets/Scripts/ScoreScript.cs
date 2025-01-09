@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 public class ScoreScript : MonoBehaviour
 {
@@ -8,22 +9,24 @@ public class ScoreScript : MonoBehaviour
     public Text currentScoreText; // UI Text for current score
     public Text highestScoreText; // UI Text for highest score
     public Text lastTimeText; // UI Text for last time
-    public GameObject gameOverPanel; // Reference to the Game Over panel
+    public GameObject gameOverPanel; // Main Game Over canvas
     public Text CoinWithBonus; // UI Text to show coins with bonus
 
     private float currentScore = 0f; // Current calculated score
     private float highestScore = 0f; // Highest score stored in PlayerPrefs
+    public GameObject NewHightestScorePanel; // Panel for new highest score
+    public GameObject GameOverPael; // Panel for normal game over
 
     private void Awake()
     {
-        // Ensure that the instance is set
+        // Singleton pattern
         if (instance == null)
         {
             instance = this;
         }
         else if (instance != this)
         {
-            Destroy(gameObject); // Ensure only one instance exists
+            Destroy(gameObject);
         }
     }
 
@@ -35,13 +38,7 @@ public class ScoreScript : MonoBehaviour
         // Initialize the highest score text
         if (highestScoreText != null)
         {
-            highestScoreText.text = "" + Mathf.FloorToInt(highestScore).ToString();
-        }
-
-        // Game Over panel is inactive initially; do not update score immediately
-        if (gameOverPanel != null && !gameOverPanel.activeSelf)
-        {
-            Debug.Log("Game Over panel is inactive. Waiting to update scores.");
+            highestScoreText.text = Mathf.FloorToInt(highestScore).ToString();
         }
     }
 
@@ -50,22 +47,37 @@ public class ScoreScript : MonoBehaviour
         // Update the current score
         currentScore = points;
 
-        // Update the highest score if necessary
         if (currentScore > highestScore)
         {
+            // Save new highest score
             highestScore = currentScore;
             PlayerPrefs.SetFloat("HighestScore", highestScore);
             PlayerPrefs.Save();
-        }
 
-        // Wait to update the UI until the Game Over panel is active
-        if (gameOverPanel != null && gameOverPanel.activeSelf)
-        {
-            UpdateScoreDisplay(timeElapsed);
+            // Show the highest score panel
+            StartCoroutine(ShowHighestScorePanel());
         }
         else
         {
-            Debug.Log("Game Over panel is not active. Deferring score update.");
+            // Directly update the normal game over panel
+            UpdateScoreDisplay(timeElapsed);
+        }
+    }
+
+    private IEnumerator ShowHighestScorePanel()
+    {
+        // Show the highest score panel
+        if (GameOverPael != null && NewHightestScorePanel != null)
+        {
+            GameOverPael.SetActive(false);
+            NewHightestScorePanel.SetActive(true);
+
+            // Wait for 2 seconds
+            yield return new WaitForSeconds(2f);
+
+            // Revert back to the normal game over panel
+            NewHightestScorePanel.SetActive(false);
+            GameOverPael.SetActive(true);
         }
     }
 
@@ -80,13 +92,13 @@ public class ScoreScript : MonoBehaviour
         // Update the current score display
         if (currentScoreText != null)
         {
-            currentScoreText.text = "" + Mathf.FloorToInt(currentScore).ToString();
+            currentScoreText.text = Mathf.FloorToInt(currentScore).ToString();
         }
 
         // Update the highest score display
         if (highestScoreText != null)
         {
-            highestScoreText.text = "" + Mathf.FloorToInt(highestScore).ToString();
+            highestScoreText.text = Mathf.FloorToInt(highestScore).ToString();
         }
 
         // Update the last time display
@@ -100,26 +112,24 @@ public class ScoreScript : MonoBehaviour
         // Calculate and add bonus coins
         AddBonusCoins(timeElapsed);
     }
+
     private void AddBonusCoins(float timeElapsed)
     {
         // Calculate bonus coins based on time elapsed
         int bonusCoins = Mathf.FloorToInt(timeElapsed / 25); // 25 seconds = 1 coin
 
-        // Add bonus coins to the CoinManager (affecting both current and persistent totals)
+        // Add bonus coins to the CoinManager
         CoinManager.instance.AddCoins(bonusCoins);
 
-        // Get the current total coins from CoinManager (after adding bonus coins)
-        int totalCoins = CoinManager.instance.coinCount; // Current session coins from CoinManager
+        // Get the updated total coins
+        int totalCoins = CoinManager.instance.coinCount;
 
-        // Update the CoinWithBonus text to show the total coins only (bonus coins added)
+        // Update the CoinWithBonus text
         if (CoinWithBonus != null)
         {
-            CoinWithBonus.text = "" + (totalCoins + bonusCoins);
+            CoinWithBonus.text = totalCoins.ToString();
         }
 
         Debug.Log($"Total coins after bonus: {totalCoins}");
     }
-
-
-
 }

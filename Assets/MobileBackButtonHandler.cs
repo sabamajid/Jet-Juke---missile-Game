@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 
 public class MobileBackButtonHandler : MonoBehaviour
 {
+
     private void Update()
     {
         // Check if the back button (Escape key) is pressed
@@ -24,7 +25,7 @@ public class MobileBackButtonHandler : MonoBehaviour
         // Example: Perform an action when in a specific scene
         if (SceneManager.GetActiveScene().name == "GamePlay")
         {
-            SceneManager.LoadScene("MainMenu");
+            PauseManager.instance.PauseGame();
         }
     }
 }

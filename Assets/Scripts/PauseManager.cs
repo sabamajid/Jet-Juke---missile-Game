@@ -2,8 +2,16 @@ using UnityEngine;
 
 public class PauseManager : MonoBehaviour
 {
+    public static PauseManager instance;
+
+    
+
+
     private bool isPaused = false; // Tracks if the game is paused
     public GameObject PausePanel;
+
+
+
 
 
     // Function to toggle the pause state
@@ -18,6 +26,25 @@ public class PauseManager : MonoBehaviour
             PauseGame();
         }
     }
+
+
+    void Awake()
+    {
+        MakeInstance();
+    }
+
+    void MakeInstance()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+    }
+
 
     // Function to pause the game
     public void PauseGame()

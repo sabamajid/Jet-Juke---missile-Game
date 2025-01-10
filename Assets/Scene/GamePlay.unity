@@ -2983,7 +2983,7 @@ GameObject:
   - component: {fileID: 944929610}
   - component: {fileID: 944929612}
   m_Layer: 5
-  m_Name: congratulations panel
+  m_Name: New Highest Scores panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5829,7 +5829,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: congratulations
+  m_Text: New Highest Scores
 --- !u!222 &1618707904
 CanvasRenderer:
   m_ObjectHideFlags: 0
